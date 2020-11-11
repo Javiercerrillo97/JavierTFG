@@ -30,7 +30,7 @@ public class Server extends Thread{
     Connection con =  null;
     ObjectOutputStream out = null;
     String str = null;
-    Datos pub = null;
+    Datosusuario pub = null;
     
     public Server() {
         try{
@@ -54,9 +54,9 @@ public class Server extends Thread{
                 System.out.println("Se ha recibido la información");
                 try{
                     Class.forName("com.mysql.jdbc.Driver");
-                    con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/smobile","root","");
+                    con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/tfg","root","");
                     stmt = (Statement) con.createStatement();
-                    rs = stmt.executeQuery("Select * from products");
+                    rs = stmt.executeQuery("Select * from usuario where nombreUsuario = 'javier'");
                     records.removeAllElements();
                     
             ResultSetMetaData RSMD = rs.getMetaData();
@@ -64,11 +64,9 @@ public class Server extends Thread{
             
             
                     while(rs.next()){
-                        pub = new Datos();
-                        pub.id = rs.getString(1);
-                        pub.pname = rs.getString(2);
-                        pub.price = rs.getString(3);
-                        pub.qty = rs.getString(4);
+                        pub = new Datosusuario();
+                        pub.nombreUsuario = rs.getString(1);
+                        pub.contrasena = rs.getString(2);
                         records.addElement(pub);
                         System.out.println("Fila retornada");
                     }

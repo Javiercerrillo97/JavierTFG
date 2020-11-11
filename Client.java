@@ -27,7 +27,7 @@ public class Client extends JFrame{
     JScrollPane sp;
     JTextArea result;
     JLabel label;
-    Datos pub;
+    Datosusuario pub;
     int i = 0;
     ObjectInputStream bt = null;
     Socket clientSocket = null;
@@ -58,19 +58,15 @@ public class Client extends JFrame{
             result.setText("");
             int i = 0;
             
-            result.append("ID\tPName\tPrice\tQty");
+            result.append("Nombre\tContrasena");
             result.append("\n------------------------------------------------------\n");
             
             while (i < records.size()){
-                pub = (Datos) records.elementAt(i);
-                str = pub.id;
+                pub = (Datosusuario) records.elementAt(i);
+                str = pub.nombreUsuario;
                 result.append(str + "\t");
-                    str = pub.pname;
-                result.append(str + "\t");
-                    str = pub.price;
-                result.append(str + "\t");
-                    str = pub.qty;    
-                result.append(str + "\n");
+                    str = pub.contrasena;
+                result.append(str + "\t");     
                 i++;
             }
             records.removeAllElements();
