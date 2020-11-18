@@ -27,7 +27,7 @@ public class Client extends JFrame{
     JScrollPane sp;
     JTextArea result;
     JLabel label;
-    Datosusuario pub;
+    Respuestas pub;
     int i = 0;
     ObjectInputStream bt = null;
     Socket clientSocket = null;
@@ -62,7 +62,7 @@ public class Client extends JFrame{
             result.append("\n------------------------------------------------------\n");
             
             while (i < records.size()){
-                pub = (Datosusuario) records.elementAt(i);
+                pub = (Respuestas) records.elementAt(i);
                 str = pub.nombreUsuario;
                 result.append(str + "\t");
                     str = pub.contrasena;

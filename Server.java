@@ -20,74 +20,71 @@ import java.util.Vector;
 import java.util.logging.Level;
 import sun.util.logging.PlatformLogger;
 
-public class Server extends Thread{
-    
+public class Server extends Thread {
+
     Statement stmt = null;
-    Vector records = new Vector(10,10);
+    Vector records = new Vector(10, 10);
+    Respuestas dat;
     ResultSet rs = null;
     ServerSocket server = null;
     Socket client = null;
-    Connection con =  null;
+    Connection con = null;
+    ObjectInputStream in = null;
     ObjectOutputStream out = null;
     String str = null;
-    Datosusuario pub = null;
-    
+    Respuestas pub = null;
+    Peticion p = null;
+    Respuestas r = new Respuestas();
+
     public Server() {
-        try{
+        try {
             server = new ServerSocket(1400);
-                System.out.println("Abriendo el servidor");
-                start();
-                System.out.println("Esperando un cliente...");
-        }catch(IOException ex){
+            System.out.println("Abriendo el servidor");
+            start();
+            System.out.println("Esperando un cliente...");
+        } catch (IOException ex) {
             java.util.logging.Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void run(){
-        while(true){
-            try{
+
+    public void run() {
+        while (true) {
+            try {
                 int cc;
-                
+
                 client = server.accept();
                 System.out.println("Conexión aceptada");
                 out = new ObjectOutputStream(client.getOutputStream());
-                System.out.println("Se ha recibido la información");
-                try{
-                    Class.forName("com.mysql.jdbc.Driver");
-                    con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/tfg","root","");
-                    stmt = (Statement) con.createStatement();
-                    rs = stmt.executeQuery("Select * from usuario where nombreUsuario = 'javier'");
-                    records.removeAllElements();
-                    
-            ResultSetMetaData RSMD = rs.getMetaData();
-            cc = RSMD.getColumnCount();
-            
-            
-                    while(rs.next()){
-                        pub = new Datosusuario();
-                        pub.nombreUsuario = rs.getString(1);
-                        pub.contrasena = rs.getString(2);
-                        records.addElement(pub);
-                        System.out.println("Fila retornada");
+                in = new ObjectInputStream(client.getInputStream());
+                try {
+                    p = (Peticion) in.readObject();
+                    System.out.println(p.mensaje);
+                    switch (p.mensaje) {
+                        case "login":
+                            System.out.println("Hola mundo");       
+                            r.login(r.nombreUsuario, r.contrasena);
+                            break;
+                        case "crear_tarea":
+                            r.crear_tarea(r.id, r.titulo, r.estado, r.fech, r.nombreCat, r.nombreUsuario);
+                            break;
+                        case "mostrar tareas":
+
                     }
-                    
-                    out.writeObject(records);
-                        out.close();
-                        System.out.println("String retornado");
-                    
+                   
                 } catch (ClassNotFoundException ex) {
                     java.util.logging.Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (SQLException ex) {
-                    java.util.logging.Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                System.out.println("Se ha recibido la información");
+                
             } catch (IOException ex) {
                 java.util.logging.Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
     }
-    
+
     public static void main(String[] args) {
-            new Server(); 
-            
+        new Server();
+
     }
 }

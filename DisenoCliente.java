@@ -1,7 +1,17 @@
 package aplicaciontcp;
 
-
+import com.mysql.jdbc.Connection;
 import java.awt.Color;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.Socket;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -9,18 +19,24 @@ import java.awt.Color;
  * and open the template in the editor.
  */
 
-/**
- *
- * @author alvaro
- */
 
-public class Diseño extends javax.swing.JFrame {
+
+public class DisenoCliente extends javax.swing.JFrame {
 Color colorAzul;
+Connection con = null;
+String user ="";
+ObjectInputStream bt = null;
+Socket clientSocket = null;
     /**
-     * Creates new form Diseño
+     * Creates new form DisenoFrame
      */
-    public Diseño() {
+    public DisenoCliente() {
         initComponents();
+    try {
+        con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/tfg", "root", "");
+    } catch (SQLException ex) {
+        Logger.getLogger(DisenoCliente.class.getName()).log(Level.SEVERE, null, ex);
+    }
         Color colorAzul = new Color(253, 254, 254);
         this.getContentPane().setBackground(colorAzul);
 
@@ -111,7 +127,10 @@ Color colorAzul;
     }// </editor-fold>//GEN-END:initComponents
 
     private void BAccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BAccederActionPerformed
+        Peticion p = new Peticion("javier", "hola");
+        p.login("javier", "1234", "login");
         
+    
     }//GEN-LAST:event_BAccederActionPerformed
 
     /**
@@ -131,22 +150,33 @@ Color colorAzul;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Diseño.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DisenoCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Diseño.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DisenoCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Diseño.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DisenoCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Diseño.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DisenoCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Diseño().setVisible(true);
+                new DisenoCliente().setVisible(true);
+                
             }
         });
+    }
+    public String SetUser(){
+        return user;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

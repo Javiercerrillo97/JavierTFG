@@ -18,7 +18,7 @@ public class DisenoAplicacion extends javax.swing.JFrame {
     Color colorAzul;
     Connection con = null;
     JCalendar cal;
-    Diseño Dis = new Diseño();
+    DisenoCliente Dis = new DisenoCliente();
 
     public DisenoAplicacion() {
 
@@ -182,7 +182,7 @@ public class DisenoAplicacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Diseño da = new Diseño();
+        DisenoCliente da = new DisenoCliente();
         da.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -197,7 +197,7 @@ public class DisenoAplicacion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void cargarCombo() {
-        Diseño llamada = new Diseño();
+        DisenoCliente llamada = new DisenoCliente();
         llamada.SetUser();
         try {
             Statement stmt = (Statement) con.createStatement();
